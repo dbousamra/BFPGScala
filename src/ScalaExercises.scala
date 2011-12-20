@@ -17,9 +17,8 @@ object Exercises {
   def main(args: Array[String]) = {
     val list = (0 until 10).toList
     val list2 = List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9), List(10, 11, 12))
-    println(list2)
-    println(concat(list2))
-    
+    println(reverse(list))
+
   }
 
   def succ(n: Int) = n + 1
@@ -87,7 +86,7 @@ object Exercises {
   // Elegance: 1 mark
   // Total: 7
   def append[A](x: List[A], y: List[A]): List[A] = {
-    x.foldRight(y){(n, z) => z.::(n) }
+    x.foldRight(y) { (n, z) => z.::(n) }
   }
 
   // Exercise 7
@@ -97,7 +96,7 @@ object Exercises {
   // Elegance: 1 mark
   // Total: 7
   def concat[A](x: List[List[A]]): List[A] = {
-    x.foldRight(Nil:List[A]) { (n, result) => append(n, result) }
+    x.foldRight(Nil: List[A]) { (n, result) => append(n, result) }
   }
 
   // Exercise 8
@@ -107,7 +106,7 @@ object Exercises {
   // Elegance: 1.5 mark
   // Total: 8
   def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = {
-    x.foldRight(Nil:List[B]) { (n, result) => append(f(n), result) }
+    x.foldRight(Nil: List[B]) { (n, result) => append(f(n), result) }
   }
 
   // Exercise 9
@@ -116,7 +115,9 @@ object Exercises {
   // Performance: 3.0 marks
   // Elegance: 2.5 marks
   // Total: 9
-  def maximum(x: List[Int]): Int = error("todo")
+  def maximum(x: List[Int]): Int = {
+    x.foldLeft(0) { (z, n) => if (n > z) n else z }
+  }
 
   // Exercise 10
   // Relative Difficulty: 10
@@ -124,24 +125,7 @@ object Exercises {
   // Performance: 2.5 marks
   // Elegance: 2.5 marks
   // Total: 10
-  def reverse[A](x: List[A]): List[A] = error("todo")
+  def reverse[A](x: List[A]): List[A] = {
+    x.foldLeft(Nil:List[A]){ (result,n) => result.::(n)}
+  }
 }
-
-//object Exercises {
-//  def succ(n: Int) = n + 1
-//  def pred(n: Int) = n - 1
-//  def add(x: Int, y: Int): Int = x match {
-//    case 0 => y
-//    case _ => add(pred(x), succ(y))
-//  }
-//  def sum(x: List[Int]): Int = x.foldLeft(0)(add)
-//  def length[A](x: List[A]): Int = x.foldLeft(0) { (z,_) => succ(z) }
-//  def map[A, B](x: List[A], f: A => B): List[B] = x.foldRight(Nil:List[B]) { (n,z) => f(n) :: z }
-//  def filter[A](x: List[A], f: A => Boolean): List[A] = x.foldRight(Nil:List[A]) { (n,z) => if(f(n)) (n :: z) else z }
-//  def append[A](x: List[A], y: List[A]): List[A] = x.foldRight(y)(::.apply)
-//  def concat[A](x: List[List[A]]): List[A] = x.foldRight(Nil:List[A])(append)
-//  def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = concat(map(x,f))
-//  /* More memory-efficient with strict evaluation: x.foldRight(Nil:List[B]) { (n,z) => append(f(n),z) } */
-//  def maximum(x: List[Int]): Int = x.foldLeft(0) { (z,n) => if(n>z) n else z }
-//  def reverse[A](x: List[A]): List[A] = x.foldLeft(Nil:List[A]) { (z,n) => n :: z }
-//}
