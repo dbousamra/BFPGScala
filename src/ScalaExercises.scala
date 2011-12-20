@@ -16,12 +16,10 @@ object Exercises {
 
   def main(args: Array[String]) = {
     val list = (0 until 10).toList
-    println(list)
-    def greaterThanTwo(a: Int): Boolean = {
-      if (a > 2) true else false
-    }
-    println(filter(list, greaterThanTwo))   
-    println(append(list, List(13, 3, 20)))
+    val list2 = List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9), List(10, 11, 12))
+    println(list2)
+    println(concat(list2))
+    
   }
 
   def succ(n: Int) = n + 1
@@ -98,7 +96,9 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1 mark
   // Total: 7
-  def concat[A](x: List[List[A]]): List[A] = error("todo")
+  def concat[A](x: List[List[A]]): List[A] = {
+    x.foldRight(Nil:List[A]) { (n, result) => append(n, result) }
+  }
 
   // Exercise 8
   // Relative Difficulty: 7
@@ -106,7 +106,9 @@ object Exercises {
   // Performance: 1.5 marks
   // Elegance: 1.5 mark
   // Total: 8
-  def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = error("todo")
+  def concatMap[A, B](x: List[A], f: A => List[B]): List[B] = {
+    x.foldRight(Nil:List[B]) { (n, result) => append(f(n), result) }
+  }
 
   // Exercise 9
   // Relative Difficulty: 8
