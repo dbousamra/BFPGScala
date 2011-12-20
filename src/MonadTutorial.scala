@@ -81,7 +81,7 @@ object MonadicFunctions {
  
   // 7. Replace error("todo") with an implementation
   def fmap[M[_], A, B](a: M[A], f: A => B, m: Monad[M]): M[B] =
-    error("todo")
+    m.flatMap(a, (x: A) => m.unital(f(x)))
  
   // 8. Replace error("todo") with an implementation
   def flatten[M[_], A](a: M[M[A]], m: Monad[M]): M[A] =
